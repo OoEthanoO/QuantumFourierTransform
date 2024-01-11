@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Quantum Fourier Transform</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">Quantum Fourier Transform</h1>
+        <div class="form-container">
+            <form method="POST">
+                <label for="numInput"># of Qubits</label>
+                <input type="number" id="numInput" name="num_qubits" min="1" max="10" autocomplete="off" required>
+                <input type="submit" value="Render">
+            </form>
+        </div>
+        <div id="version"><a href="/details">project</a> version 0.1 by <strong>Ethan Yan Xu</strong> | website version 0.4</div>
+        <div id="wiki">Wikipedia: <a href="https://en.wikipedia.org/wiki/Quantum_Fourier_transform">link</a></div>
+        {% if img_data %}
+            <div class="image-container">
+                <img id="circuitImage" src="data:image/png;base64,{{ img_data }}" style="width: 100%;" alt="">
+            </div>
+            <div class="text-center my-2">
+                <input type="hidden" id="qcText" value="{{ qc_text }}">
+                <button class="btn btn-primary" onclick="copyToClipboard()">Copy Text</button>
+            </div>
+        {% endif %}
+    </div>
+</body>
+<script>
+    function copyToClipboard() {
+        var copyText = document.getElementById("qcText");
+        navigator.clipboard.writeText(copyText.value).then(function() {
+            alert("Copied to clipboard!");
+        }, function() {
+            alert("Failed to copy to clipboard!");
+        });
+    }
+</script>
